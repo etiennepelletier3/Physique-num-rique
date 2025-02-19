@@ -41,4 +41,5 @@ def saveImage(image, prefix):
     im = plt.imshow(image, cmap = cm.Greys_r)
     plt.colorbar()
     plt.title("method: "+prefix)
-    plt.savefig(prefix+"-"+time.strftime("%Y%m%d-%H%M%S")+".png")
+    # plt.savefig(prefix+"-"+time.strftime("%Y%m%d-%H%M%S")+".png")
+    plt.show()
