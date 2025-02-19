@@ -61,9 +61,23 @@ def laminogram():
                 #le pixel le plus proche ou interpoler linéairement...Rappel, le centre
                 #du détecteur est toujours aligné avec le centre de la grille de
                 #reconstruction peu importe l'angle.
+                voxel_center = np.array([0, 0])
+                voxel_x = j - geo.nbvox/2
+                voxel_y = geo.nbvox/2 - i
                 
+                vec_voxel_ij = np.array([voxel_x, voxel_y]) * geo.voxsize
                 
+                vec_proj = np.array([np.cos(angles[a]), np.sin(angles[a])])
                 
+                t = np.dot(vec_proj, voxel_ij) # distance t du centre du détecteur [cm]
+                
+                pix_detect = int(round(t / geo.pixsize)) # position du pixel sur le détecteur
+                
+                pix_sin = pix_detect + geo.nbpix/2 # position du pixel dans le sinogramme
+                
+                pix_val = sinogram[a, pix_detect] # valeur du pixel dans le sinogramme
+                
+                image[i, j] += pix_val
                 
     util.saveImage(image, "lam")
 
