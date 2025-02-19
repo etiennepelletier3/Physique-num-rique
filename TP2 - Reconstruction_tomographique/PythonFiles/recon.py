@@ -75,9 +75,7 @@ def laminogram():
                 
                 pix_sin = int(pix_detect + geo.nbpix/2) # position du pixel dans le sinogramme
                 
-                a_sin = int(nbprj / (2 * np.pi) * angles[a]) # angle dans le sinogramme
-                
-                pix_val = sinogram[a_sin-1][pix_sin] # valeur du pixel dans le sinogramme
+                pix_val = sinogram[a][pix_sin] # valeur du pixel dans le sinogramme
                 
                 image[i, j] += pix_val
                 
