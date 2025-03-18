@@ -103,8 +103,22 @@ def backproject():
         print("working on image column: "+str(j+1)+"/"+str(geo.nbvox))
         for i in range(geo.nbvox): # lignes de l'image
             for a in range(len(angles)):
-                pass
-                #votre code ici
+                voxel_x = geo.nbvox/2 - i
+                voxel_y = j - geo.nbvox/2
+                
+                vec_voxel_ij = np.array([voxel_x, voxel_y]) * geo.voxsize
+                
+                vec_proj = np.array([np.cos(angles[a]), np.sin(angles[a])])
+                
+                t = np.dot(vec_proj, vec_voxel_ij) # distance t du centre du détecteur [cm]
+                
+                pix_detect = int(round(t / geo.pixsize)) # position du pixel sur le détecteur
+                
+                pix_sin = int(pix_detect + geo.nbpix/2) # position du pixel dans le sinogramme
+                
+                pix_val = sinogram[a][pix_sin] # valeur du pixel dans le sinogramme
+                
+                image[j, i] += pix_val
                #pas mal la même chose que prédédemment
             #mais avec un sinogramme qui aura été préalablement filtré
     
