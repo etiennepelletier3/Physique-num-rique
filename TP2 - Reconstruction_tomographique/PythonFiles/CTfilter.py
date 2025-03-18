@@ -14,8 +14,19 @@ def filterSinogram(sinogram):
     for i in range(sinogram.shape[0]):
         sinogram[i] = filterLine(sinogram[i])
 
-## filter une ligne (projection) via FFT
+## filtrer une ligne (projection) via FFT
 def filterLine(projection):
-    pass
-    # votre code ici
-    # un filtre rampe est suffisant    
+    fft_projection = np.fft.rfft(projection)
+
+    # Créer un filtre rampe |u|
+    freqs = np.fft.rfftfreq(len(projection)) # fréquences
+    filtre_rampe = np.abs(freqs) # filtre rampe
+    
+    # Appliquer le filtre rampe sur la fft de la projection
+    filtered_fft_projection = fft_projection * filtre_rampe
+    
+    # Retourner au domaine spatial
+    filtered_projection = np.fft.irfft(filtered_fft_projection)
+    
+    return filtered_projection
+

@@ -91,9 +91,16 @@ def backproject():
     
     # initialiser une image reconstruite
     image = np.zeros((geo.nbvox, geo.nbvox))
-    
+
     ### option filtrer ###
     CTfilter.filterSinogram(sinogram)
+
+    import matplotlib.pyplot as plt
+
+    # Plot the filtered sinogram
+    plt.imshow(sinogram, cmap='gray', aspect='auto')
+    plt.title('Sinogram filtré')
+    plt.show()
     ######
     
     # "etaler" les projections sur l'image
@@ -119,8 +126,8 @@ def backproject():
                 pix_val = sinogram[a][pix_sin] # valeur du pixel dans le sinogramme
                 
                 image[j, i] += pix_val
-               #pas mal la même chose que prédédemment
-            #mais avec un sinogramme qui aura été préalablement filtré
+            #    pas mal la même chose que prédédemment
+            # mais avec un sinogramme qui aura été préalablement filtré
     
     util.saveImage(image, "fbp")
 
@@ -147,15 +154,13 @@ def reconFourierSlice():
    #au centre et moins bon en périphérie. Un TF inverse de IMAGE vous
    #donnera l'image recherchée.
 
-   
-    
     util.saveImage(image, "fft")
 
 
 ## main ##
 start_time = time.time()
-laminogram()
-#backproject()
+# laminogram()
+backproject()
 #reconFourierSlice()
 print("--- %s seconds ---" % (time.time() - start_time))
 
